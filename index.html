@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Saraswati Puja – Contribution Checklist</title>
+  <title>Saraswati Puja – Contribution</title>
   <style>
     :root{
       --bd:#e6e6e6;
@@ -138,39 +138,40 @@
 <script>
   // ====== 1) Put your list here ======
   // amount is number; paid true/false
-  const DEFAULT_ROWS = [
-    { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 11000, paid: false },
-    { sno: 2,  name: "MUKESH BHAIYA", amount: 7000, paid: false },
-    { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100, paid: false },
-    { sno: 4,  name: "GOLU BHAIYA", amount: 5100, paid: false },
-    { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000, paid: false },
-    { sno: 6,  name: "SUNNY + RAJNISH BHAIYA", amount: 5000, paid: false },
-    { sno: 7,  name: "VICKY", amount: 5000, paid: false },
-    { sno: 8,  name: "ANNU + MANNU + PITTU BHAIYA", amount: 4500, paid: false },
-    { sno: 9,  name: "DEEPU BHAIYA", amount: 2800, paid: false },
-    { sno: 10, name: "VIJAY YADAV JII", amount: 2500, paid: false },
-    { sno: 11, name: "DEEPAK BHAIYA", amount: 2100, paid: false },
-    { sno: 12, name: "VIKASH BHAIYA", amount: 2100, paid: false },
-    { sno: 13, name: "CHHOTU BHAIYA", amount: 2000, paid: false },
-    { sno: 14, name: "BAGISH BHAIYA", amount: 2000, paid: false },
-    { sno: 15, name: "RUPESH BHAIYA", amount: 1500, paid: false },
-    { sno: 16, name: "RAUSHAN", amount: 1100, paid: false },
-    { sno: 17, name: "SHAILESH BHAIYA", amount: 1000, paid: false },
-    { sno: 18, name: "RAMKUMAR CHA", amount: 1000, paid: false },
-    { sno: 19, name: "DEEPAK", amount: 1000, paid: false },
-    { sno: 20, name: "RANJAN CHA", amount: 1000, paid: false },
-    { sno: 21, name: "MITESH BHAIYA", amount: 1000, paid: false },
-    { sno: 22, name: "MUTO", amount: 1000, paid: false },
-    { sno: 23, name: "ANSHU BHAIYA", amount: 1000, paid: false },
-    { sno: 24, name: "CHANDAN BHAIYA", amount: 500, paid: false },
-    { sno: 25, name: "KANHAIYA BHAIYA", amount: 500, paid: false },
-    { sno: 26, name: "YOGESH (BITTU)", amount: 500, paid: false },
-    { sno: 27, name: "SUDHIR CHA", amount: 500, paid: false },
-    { sno: 28, name: "RAVINDRA BHAIYA", amount: 500, paid: false },
-    { sno: 29, name: "ROHIT BHAIYA", amount: 500, paid: false },
-    { sno: 30, name: "RAJIV BHAIYA", amount: 400, paid: false },
-    { sno: 31, name: "2021 SAVING AMOUNT (FROM PITTU BHAIYA)", amount: 1500, paid: false },
-  ];
+const DEFAULT_ROWS = [
+  { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 11000, paid: false },
+  { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false },
+  { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100,  paid: false },
+  { sno: 4,  name: "GOLU BHAIYA", amount: 5100,  paid: false },
+  { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000,  paid: false },
+  { sno: 6,  name: "SUNNY BHAIYA", amount: 5000,  paid: false },
+  { sno: 7,  name: "VICKY BHAI", amount: 5000,  paid: false },
+  { sno: 8,  name: "(ANNU + MANNU + PITTU) BHAIYA", amount: 5000, paid: false },
+  { sno: 9,  name: "SANJEEV SIR", amount: 5000,  paid: false },
+  { sno: 10, name: "BAGISH BHAIYA", amount: 5000,  paid: false },
+  { sno: 11, name: "JHUNKI", amount: 5000,  paid: false },
+  { sno: 12, name: "PREM BHAI", amount: 5000,  paid: false },
+  { sno: 13, name: "ABHISHEK BHAI", amount: 5000, paid: false },
+
+  { sno: 14, name: "VIJAY YADAV JII", amount: 2500, paid: false },
+  { sno: 15, name: "DEEPAK BHAIYA", amount: 2100, paid: false },
+  { sno: 16, name: "VIKASH BHAIYA", amount: 2100, paid: false },
+  { sno: 17, name: "CHHOTU BHAIYA", amount: 2000, paid: false },
+  { sno: 18, name: "RUPESH BHAIYA", amount: 2000, paid: false },
+  { sno: 19, name: "RAUSHAN BHAI", amount: 2100, paid: false },
+  { sno: 20, name: "DEEPAK BHAI", amount: 2000, paid: false },
+
+  { sno: 21, name: "MITESH BHAIYA", amount: 1000, paid: false },
+  { sno: 22, name: "MUTO BHAI", amount: 2000, paid: false },
+
+  { sno: 23, name: "ANSHU BHAI", amount: 2000, paid: false },
+  { sno: 24, name: "ANKUR (CHHOTU) BHAI", amount: 2000, paid: false },
+  { sno: 25, name: "VIBHASH BHAI", amount: 2000, paid: false },
+
+  { sno: 26, name: "CHANDAN BHAIYA", amount: 1000, paid: false },
+  { sno: 27, name: "YOGESH (BITTU)", amount: 1000, paid: false },
+];
+
 
   // ====== 2) Storage key (do not change unless needed) ======
   const KEY = "saraswati_puja_paid_v1";
