@@ -1,393 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Saraswati Puja – Contribution Checklist (Editable)</title>
+  <meta charset="UTF-8" />
+  <title>Saraswati Puja Contribution List</title>
   <style>
-    :root { --bd:#e5e5e5; --muted:#666; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-    h1 { margin: 0 0 6px; font-size: 22px; }
-    .muted { color: var(--muted); margin: 0 0 14px; }
-    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin: 10px 0; }
-    input, button, select { padding: 8px 10px; }
-    input[type="text"], input[type="number"] { min-width: 180px; }
-    button { cursor:pointer; }
-    .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin: 12px 0 14px; }
-    .card { border:1px solid var(--bd); border-radius:10px; padding:12px; }
-    .card .label { color:var(--muted); font-size:12px; }
-    .card .value { font-size:18px; font-weight:700; margin-top:2px; }
-    table { width:100%; border-collapse:collapse; margin-top: 8px; }
-    th, td { border-bottom:1px solid #ddd; padding:10px 8px; text-align:left; vertical-align:top; }
-    th { position:sticky; top:0; background:#fff; z-index:1; }
-    td.amount, th.amount { text-align:right; white-space:nowrap; }
-    td.center, th.center { text-align:center; }
-    td[contenteditable="true"] { outline: none; border-radius:6px; }
-    td[contenteditable="true"]:focus { box-shadow: 0 0 0 2px rgba(0,0,0,0.08); }
-    .danger { color:#b00020; }
-    .small { font-size:12px; color:var(--muted); }
-    .actions { display:flex; gap:8px; }
-    .file { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 16px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      background: #f2f2f2;
+    }
+    .right {
+      text-align: right;
+    }
+    .summary {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h1>Saraswati Puja – Contribution Checklist (Editable)</h1>
-  <p class="muted">
-    You can edit name/amount, add/remove people, and tick Paid ✅.
-    Everything is saved on this device (browser local storage). Use Export/Import to move data to another device.
-  </p>
+  <h1>सारस्वती पूजा योगदान सूची</h1>
+  <p><strong>Note:</strong> Tick ✅ “Paid?” when the contribution is received.</p>
 
-  <div class="cards">
-    <div class="card"><div class="label">Total Contributors</div><div class="value" id="totalContrib">–</div></div>
-    <div class="card"><div class="label">Total Amount</div><div class="value" id="totalAmt">–</div></div>
-    <div class="card"><div class="label">Paid Amount</div><div class="value" id="paidAmt">–</div></div>
-    <div class="card"><div class="label">Unpaid Amount</div><div class="value" id="unpaidAmt">–</div></div>
-  </div>
-
-  <div class="row">
-    <input id="q" type="search" placeholder="Search name…" />
-    <select id="filter">
-      <option value="all">All</option>
-      <option value="paid">Paid ✅</option>
-      <option value="unpaid">Unpaid ⬜</option>
-    </select>
-    <button id="markAllPaid">Mark shown as Paid</button>
-    <button id="markAllUnpaid">Mark shown as Unpaid</button>
-  </div>
-
-  <hr style="border:none;border-top:1px solid var(--bd); margin: 14px 0;" />
-
-  <div class="row">
-    <input id="newName" type="text" placeholder="Add person name" />
-    <input id="newAmount" type="number" placeholder="Amount" min="0" step="1" />
-    <input id="newNotes" type="text" placeholder="Notes (optional)" />
-    <label class="row" style="margin:0; gap:6px;">
-      <input id="newPaid" type="checkbox" />
-      Paid
-    </label>
-    <button id="addPerson">Add</button>
-  </div>
-  <div class="small">
-    Tip: click inside a cell to edit. Amount should be a number (like 500 / 2100 / 11000).
-  </div>
-
-  <div class="row file" style="margin-top:12px;">
-    <button id="exportJson">Export JSON</button>
-    <label>
-      Import JSON:
-      <input id="importJson" type="file" accept="application/json" />
-    </label>
-    <button id="resetDefault" class="danger">Reset to Default List</button>
-    <button id="clearLocal">Clear Local Saved Data</button>
-  </div>
-
-  <table>
+  <table id="contributionTable">
     <thead>
       <tr>
-        <th style="width:70px;">S No</th>
-        <th>Devotee (editable)</th>
-        <th class="amount" style="width:140px;">Amount (editable)</th>
-        <th class="center" style="width:90px;">Paid?</th>
-        <th style="width:220px;">Notes (editable)</th>
-        <th style="width:110px;">Action</th>
+        <th>S. No.</th>
+        <th>Devotee</th>
+        <th class="right">Amount (₹)</th>
+        <th>Paid?</th>
       </tr>
     </thead>
-    <tbody id="tbody"></tbody>
+    <tbody>
+      <tr><td>1</td><td>SHAMBHU BHAIYA + CHHOTU</td><td class="right">11000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>2</td><td>MUKESH BHAIYA</td><td class="right">7000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>3</td><td>NANDAN SIR (MANAS INTERNATIONAL SCHOOL)</td><td class="right">5100</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>4</td><td>GOLU BHAIYA</td><td class="right">5100</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>5</td><td>MUNMUN BHAIYA</td><td class="right">5000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>6</td><td>(SUNNY + RAJNISH) BHAIYA</td><td class="right">5000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>7</td><td>VICKY</td><td class="right">5000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>8</td><td>(ANNU + MANNU + PITTU) BHAIYA</td><td class="right">4500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>9</td><td>DEEPU BHAIYA</td><td class="right">2800</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>10</td><td>VIJAY YADAV JI</td><td class="right">2500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>11</td><td>DEEPAK BHAIYA</td><td class="right">2100</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>12</td><td>VIKASH BHAIYA</td><td class="right">2100</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>13</td><td>CHHOTU BHAIYA</td><td class="right">2000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>14</td><td>BAGISH BHAIYA</td><td class="right">2000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>15</td><td>RUPESH BHAIYA</td><td class="right">1500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>16</td><td>RAUSHAN</td><td class="right">1100</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>17</td><td>SHAILESH BHAIYA</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>18</td><td>RAMKUMAR CHA</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>19</td><td>DEEPAK</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>20</td><td>RANJAN CHA</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>21</td><td>MITESH BHAIYA</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>22</td><td>MUTO</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>23</td><td>ANSHU BHAIYA</td><td class="right">1000</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>24</td><td>CHANDAN BHAIYA</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>25</td><td>KANHAIYA BHAIYA</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>26</td><td>YOGESH (BITTU)</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>27</td><td>SUDHIR CHA</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>28</td><td>RAVINDRA BHAIYA</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>29</td><td>ROHIT BHAIYA</td><td class="right">500</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>30</td><td>RAJIV BHAIYA</td><td class="right">400</td><td><input type="checkbox" class="paid"></td></tr>
+      <tr><td>31</td><td>2021 SAVING AMOUNT (FROM PITTU BHAIYA)</td><td class="right">1500</td><td><input type="checkbox" class="paid"></td></tr>
+    </tbody>
   </table>
 
-<script>
-  // ====== CHANGE ONLY THIS if you want to update the default list ======
-  const DEFAULT_ROWS = [
-    { id:"1",  sno:1,  name:"SHAMBHU BHAIYA + CHHOTU", amount:11000, paid:false, notes:"" },
-    { id:"2",  sno:2,  name:"MUKESH BHAIYA", amount:7000, paid:false, notes:"" },
-    { id:"3",  sno:3,  name:"NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount:5100, paid:false, notes:"" },
-    { id:"4",  sno:4,  name:"GOLU BHAIYA", amount:5100, paid:false, notes:"" },
-    { id:"5",  sno:5,  name:"MUNMUN BHAIYA", amount:5000, paid:false, notes:"" },
-    { id:"6",  sno:6,  name:"SUNNY + RAJNISH BHAIYA", amount:5000, paid:false, notes:"" },
-    { id:"7",  sno:7,  name:"VICKY", amount:5000, paid:false, notes:"" },
-    { id:"8",  sno:8,  name:"ANNU + MANNU + PITTU BHAIYA", amount:4500, paid:false, notes:"" },
-    { id:"9",  sno:9,  name:"DEEPU BHAIYA", amount:2800, paid:false, notes:"" },
-    { id:"10", sno:10, name:"VIJAY YADAV JII", amount:2500, paid:false, notes:"" },
-    { id:"11", sno:11, name:"DEEPAK BHAIYA", amount:2100, paid:false, notes:"" },
-    { id:"12", sno:12, name:"VIKASH BHAIYA", amount:2100, paid:false, notes:"" },
-    { id:"13", sno:13, name:"CHHOTU BHAIYA", amount:2000, paid:false, notes:"" },
-    { id:"14", sno:14, name:"BAGISH BHAIYA", amount:2000, paid:false, notes:"" },
-    { id:"15", sno:15, name:"RUPESH BHAIYA", amount:1500, paid:false, notes:"" },
-    { id:"16", sno:16, name:"RAUSHAN", amount:1100, paid:false, notes:"" },
-    { id:"17", sno:17, name:"SHAILESH BHAIYA", amount:1000, paid:false, notes:"" },
-    { id:"18", sno:18, name:"RAMKUMAR CHA", amount:1000, paid:false, notes:"" },
-    { id:"19", sno:19, name:"DEEPAK", amount:1000, paid:false, notes:"" },
-    { id:"20", sno:20, name:"RANJAN CHA", amount:1000, paid:false, notes:"" },
-    { id:"21", sno:21, name:"MITESH BHAIYA", amount:1000, paid:false, notes:"" },
-    { id:"22", sno:22, name:"MUTO", amount:1000, paid:false, notes:"" },
-    { id:"23", sno:23, name:"ANSHU BHAIYA", amount:1000, paid:false, notes:"" },
-    { id:"24", sno:24, name:"CHANDAN BHAIYA", amount:500, paid:false, notes:"" },
-    { id:"25", sno:25, name:"KANHAIYA BHAIYA", amount:500, paid:false, notes:"" },
-    { id:"26", sno:26, name:"YOGESH (BITTU)", amount:500, paid:false, notes:"" },
-    { id:"27", sno:27, name:"SUDHIR CHA", amount:500, paid:false, notes:"" },
-    { id:"28", sno:28, name:"RAVINDRA BHAIYA", amount:500, paid:false, notes:"" },
-    { id:"29", sno:29, name:"ROHIT BHAIYA", amount:500, paid:false, notes:"" },
-    { id:"30", sno:30, name:"RAJIV BHAIYA", amount:400, paid:false, notes:"" },
-    { id:"31", sno:31, name:"2021 SAVING AMOUNT (FROM PITTU BHAIYA)", amount:1500, paid:false, notes:"" }
-  ];
+  <div class="summary" id="summary"></div>
 
-  const KEY = "saraswati_puja_rows_v1";
-  const fmt = new Intl.NumberFormat("en-IN", { style:"currency", currency:"INR", maximumFractionDigits:0 });
+  <script>
+    function updateSummary() {
+      const rows = document.querySelectorAll("#contributionTable tbody tr");
+      let total = 0;
+      let paidTotal = 0;
+      let paidCount = 0;
 
-  function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+      rows.forEach(row => {
+        const amount = parseFloat(row.children[2].textContent.trim()) || 0;
+        const checkbox = row.querySelector("input.paid");
+        total += amount;
+        if (checkbox && checkbox.checked) {
+          paidTotal += amount;
+          paidCount += 1;
+        }
+      });
 
-  function loadRows() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return clone(DEFAULT_ROWS);
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return clone(DEFAULT_ROWS);
-      return parsed;
-    } catch (e) {
-      return clone(DEFAULT_ROWS);
+      const summary = document.getElementById("summary");
+      summary.textContent =
+        `Total Amount: ₹${total} | Paid: ₹${paidTotal} (${paidCount} people) | Unpaid: ₹${total - paidTotal}`;
     }
-  }
 
-  function saveRows(rows) {
-    localStorage.setItem(KEY, JSON.stringify(rows));
-  }
-
-  function renumberSno(rows) {
-    rows.forEach((r, i) => r.sno = i + 1);
-    return rows;
-  }
-
-  function filteredRows(rows) {
-    const q = document.getElementById("q").value.trim().toLowerCase();
-    const f = document.getElementById("filter").value;
-    return rows.filter(r => {
-      if (f === "paid" && !r.paid) return false;
-      if (f === "unpaid" && r.paid) return false;
-      if (q && !(r.name || "").toLowerCase().includes(q)) return false;
-      return true;
+    // Attach listeners
+    document.querySelectorAll("input.paid").forEach(cb => {
+      cb.addEventListener("change", updateSummary);
     });
-  }
 
-  function updateSummary(rows) {
-    const total = rows.reduce((a, r) => a + (Number(r.amount) || 0), 0);
-    const paid = rows.reduce((a, r) => a + (r.paid ? (Number(r.amount) || 0) : 0), 0);
-    document.getElementById("totalContrib").textContent = String(rows.length);
-    document.getElementById("totalAmt").textContent = fmt.format(total);
-    document.getElementById("paidAmt").textContent = fmt.format(paid);
-    document.getElementById("unpaidAmt").textContent = fmt.format(total - paid);
-  }
-
-  function render() {
-    const rows = loadRows();
-    const view = filteredRows(rows);
-
-    const tbody = document.getElementById("tbody");
-    tbody.innerHTML = "";
-
-    for (const r of view) {
-      const tr = document.createElement("tr");
-      tr.dataset.id = r.id;
-
-      tr.innerHTML = `
-        <td>${r.sno}</td>
-        <td contenteditable="true" data-field="name">${escapeHtml(r.name || "")}</td>
-        <td class="amount" contenteditable="true" data-field="amount">${escapeHtml(String(r.amount ?? ""))}</td>
-        <td class="center">
-          <input type="checkbox" data-action="togglePaid" ${r.paid ? "checked" : ""} />
-        </td>
-        <td contenteditable="true" data-field="notes">${escapeHtml(r.notes || "")}</td>
-        <td>
-          <div class="actions">
-            <button data-action="delete" class="danger">Delete</button>
-          </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    }
-
-    updateSummary(rows);
-  }
-
-  // basic HTML escape for safe contenteditable rendering
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll("\"","&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function addPerson() {
-    const name = document.getElementById("newName").value.trim();
-    const amount = Number(document.getElementById("newAmount").value);
-    const notes = document.getElementById("newNotes").value.trim();
-    const paid = document.getElementById("newPaid").checked;
-
-    if (!name) { alert("Please enter a name."); return; }
-    if (!Number.isFinite(amount) || amount < 0) { alert("Please enter a valid amount (0 or more)."); return; }
-
-    const rows = loadRows();
-    const id = String(Date.now()) + "_" + Math.random().toString(16).slice(2);
-
-    rows.push({ id, sno: rows.length + 1, name, amount: Math.round(amount), paid, notes });
-    saveRows(renumberSno(rows));
-
-    document.getElementById("newName").value = "";
-    document.getElementById("newAmount").value = "";
-    document.getElementById("newNotes").value = "";
-    document.getElementById("newPaid").checked = false;
-
-    render();
-  }
-
-  function setPaidForShown(value) {
-    const rows = loadRows();
-    const shownIds = new Set(filteredRows(rows).map(r => r.id));
-    for (const r of rows) if (shownIds.has(r.id)) r.paid = value;
-    saveRows(rows);
-    render();
-  }
-
-  function deleteRow(id) {
-    const rows = loadRows().filter(r => r.id !== id);
-    saveRows(renumberSno(rows));
-    render();
-  }
-
-  function updateField(id, field, value) {
-    const rows = loadRows();
-    const row = rows.find(r => r.id === id);
-    if (!row) return;
-
-    if (field === "amount") {
-      const n = Number(String(value).replace(/[^\d.-]/g, ""));
-      row.amount = Number.isFinite(n) ? Math.max(0, Math.round(n)) : 0;
-    } else if (field === "name") {
-      row.name = String(value).trim();
-    } else if (field === "notes") {
-      row.notes = String(value).trim();
-    }
-    saveRows(rows);
-    render();
-  }
-
-  function togglePaid(id, checked) {
-    const rows = loadRows();
-    const row = rows.find(r => r.id === id);
-    if (!row) return;
-    row.paid = !!checked;
-    saveRows(rows);
-    render();
-  }
-
-  function exportJson() {
-    const rows = loadRows();
-    const blob = new Blob([JSON.stringify(rows, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "saraswati_puja_contributions.json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(a.href);
-  }
-
-  function importJsonFile(file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const parsed = JSON.parse(reader.result);
-        if (!Array.isArray(parsed)) throw new Error("JSON is not an array");
-        // minimal validation + normalize
-        const cleaned = parsed.map((r, i) => ({
-          id: String(r.id || (Date.now() + "_" + i)),
-          sno: i + 1,
-          name: String(r.name || "").trim(),
-          amount: Math.max(0, Math.round(Number(r.amount) || 0)),
-          paid: !!r.paid,
-          notes: String(r.notes || "").trim()
-        }));
-        saveRows(renumberSno(cleaned));
-        render();
-        alert("Import successful ✅");
-      } catch (e) {
-        alert("Import failed: " + e.message);
-      }
-    };
-    reader.readAsText(file);
-  }
-
-  function resetToDefault() {
-    if (!confirm("Reset list to default? This will overwrite your saved edits.")) return;
-    saveRows(clone(DEFAULT_ROWS));
-    render();
-  }
-
-  function clearLocal() {
-    if (!confirm("Clear saved local data? This will remove your saved edits from this browser.")) return;
-    localStorage.removeItem(KEY);
-    render();
-  }
-
-  // ===== events =====
-  document.getElementById("addPerson").addEventListener("click", addPerson);
-  document.getElementById("exportJson").addEventListener("click", exportJson);
-  document.getElementById("resetDefault").addEventListener("click", resetToDefault);
-  document.getElementById("clearLocal").addEventListener("click", clearLocal);
-  document.getElementById("markAllPaid").addEventListener("click", () => setPaidForShown(true));
-  document.getElementById("markAllUnpaid").addEventListener("click", () => setPaidForShown(false));
-  ["q","filter"].forEach(id => document.getElementById(id).addEventListener("input", render));
-
-  document.getElementById("importJson").addEventListener("change", (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) importJsonFile(file);
-    e.target.value = "";
-  });
-
-  // checkbox + delete button
-  document.addEventListener("click", (e) => {
-    const btn = e.target;
-    if (!(btn instanceof HTMLElement)) return;
-    const tr = btn.closest("tr");
-    if (!tr) return;
-    const id = tr.dataset.id;
-
-    const action = btn.dataset.action;
-    if (action === "delete") {
-      if (confirm("Delete this person?")) deleteRow(id);
-    }
-  });
-
-  // toggle paid checkbox
-  document.addEventListener("change", (e) => {
-    const el = e.target;
-    if (!(el instanceof HTMLInputElement)) return;
-    if (el.dataset.action === "togglePaid") {
-      const tr = el.closest("tr");
-      if (!tr) return;
-      togglePaid(tr.dataset.id, el.checked);
-    }
-  });
-
-  // save edits from contenteditable cells
-  document.addEventListener("blur", (e) => {
-    const td = e.target;
-    if (!(td instanceof HTMLElement)) return;
-    if (td.getAttribute("contenteditable") !== "true") return;
-
-    const tr = td.closest("tr");
-    if (!tr) return;
-
-    const field = td.dataset.field;
-    if (!field) return;
-
-    updateField(tr.dataset.id, field, td.innerText);
-  }, true);
-
-  // initial render
-  render();
-</script>
-
+    // Initial summary
+    updateSummary();
+  </script>
 </body>
 </html>
