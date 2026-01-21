@@ -20,6 +20,47 @@
     .sub{ margin:0 0 18px; color:var(--muted); font-size: 14px; }
     .sub .check{ font-size: 16px; margin: 0 4px; }
 
+    /* NEW: QR section */
+    .qrSection{
+      border:1px solid var(--bd);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background:#fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+      margin: 12px 0 18px;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 16px;
+      align-items: center;
+    }
+    .qrTitle{
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 6px;
+    }
+    .qrText{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .qrImgWrap{
+      text-align: center;
+    }
+    .qrImg{
+      width: 200px;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .qrNote{
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
     .cards{
       display:grid;
       grid-template-columns: repeat(4, minmax(160px, 1fr));
@@ -82,15 +123,35 @@
     @media (max-width: 980px){
       .cards{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       h1{ font-size: 28px; }
+      .qrSection{ grid-template-columns: 1fr; }
+      .qrImg{ width: 220px; }
     }
   </style>
 </head>
+
 <body>
-  <h1>Saraswati Puja – Contribution </h1>
+  <h1>Saraswati Puja – Contribution</h1>
+
   <p class="sub">
-  Grey tick mark (disabled): <span class="check"></span>
-  It indicates that the person has already paid and the record has been updated in the database.
-</p>
+    Grey tick mark (disabled): <span class="check">✅</span>
+    It indicates that the person has already paid and the record has been updated in the database.
+  </p>
+
+  <!-- ✅ NEW: PhonePe QR section -->
+  <div class="qrSection">
+    <div>
+      <p class="qrTitle">Want to contribute for Saraswati Puja? 🙏</p>
+      <p class="qrText">
+        Please scan the PhonePe QR code and pay your contribution.
+        After payment, we will update your status in the list.
+      </p>
+    </div>
+    <div class="qrImgWrap">
+      <!-- Put phonepe_qr.jpg in same folder as index.html -->
+      <img class="qrImg" src="phonepe_qr.jpg" alt="PhonePe QR code for Saraswati Puja contribution" />
+      <div class="qrNote">Scan using PhonePe / UPI app</div>
+    </div>
+  </div>
 
   <div class="cards">
     <div class="card">
@@ -139,7 +200,6 @@
   </table>
 
 <script>
-  // ====== 1) Put your list here ======
   const DEFAULT_ROWS = [
     { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true,  isHardcodedPaid: true },
     { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false, isHardcodedPaid: false },
@@ -173,8 +233,7 @@
     { sno: 25, name: "YOGESH (BITTU)", amount: 1000, paid: false, isHardcodedPaid: false },
   ];
 
-  // ====== 2) Versioned Local Storage (IMPORTANT) ======
-  // Change v1 -> v2 whenever you update DEFAULT_ROWS defaults.
+  // Versioned Local Storage
   const DATA_VERSION = "v1";
   const KEY = `saraswati_puja_paid_${DATA_VERSION}`;
 
@@ -184,7 +243,6 @@
     maximumFractionDigits: 0
   });
 
-  // Hardcoded paid rows always win, local storage cannot override them
   function enforceHardcodedPaid(rows) {
     for (const r of rows) {
       if (r.isHardcodedPaid) r.paid = true;
@@ -198,23 +256,19 @@
 
     if (raw) {
       try {
-        const paidMap = JSON.parse(raw); // { "1": true, "2": false ... }
+        const paidMap = JSON.parse(raw);
         for (const r of rows){
-          // only apply stored value if NOT hardcoded-paid
           if (!r.isHardcodedPaid && paidMap[String(r.sno)] != null) {
             r.paid = !!paidMap[String(r.sno)];
           }
         }
-      } catch {
-        // ignore parse error; fallback to defaults
-      }
+      } catch {}
     }
 
     return enforceHardcodedPaid(rows);
   }
 
   function savePaid(rows){
-    // Store only for non-hardcoded rows (optional but clean)
     const paidMap = {};
     for (const r of rows){
       if (!r.isHardcodedPaid) paidMap[String(r.sno)] = !!r.paid;
@@ -253,7 +307,6 @@
 
     for (const r of view){
       const tr = document.createElement("tr");
-
       tr.innerHTML = `
         <td class="sno">${r.sno}</td>
         <td class="devotee">${escapeHtml(r.name)}</td>
@@ -277,7 +330,6 @@
       .replaceAll("'","&#039;");
   }
 
-  // Toggle single checkbox (ignore hardcoded)
   document.addEventListener("change", (e) => {
     const el = e.target;
     if (!(el instanceof HTMLInputElement)) return;
@@ -289,7 +341,6 @@
     if (!row) return;
 
     if (row.isHardcodedPaid) {
-      // keep it checked always
       row.paid = true;
       savePaid(rows);
       render();
@@ -301,7 +352,6 @@
     render();
   });
 
-  // Controls
   document.getElementById("markPaid").addEventListener("click", () => {
     const rows = loadRows();
     const ids = new Set(getFiltered(rows).map(r => r.sno));
@@ -317,7 +367,6 @@
     const rows = loadRows();
     const ids = new Set(getFiltered(rows).map(r => r.sno));
     for (const r of rows){
-      // do NOT mark hardcoded ones as unpaid
       if (ids.has(r.sno) && !r.isHardcodedPaid) r.paid = false;
     }
     enforceHardcodedPaid(rows);
@@ -326,7 +375,6 @@
   });
 
   document.getElementById("reset").addEventListener("click", () => {
-    // remove saved non-hardcoded statuses; hardcoded paid stays true from defaults
     localStorage.removeItem(KEY);
     render();
   });
