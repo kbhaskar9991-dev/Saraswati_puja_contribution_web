@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -86,15 +85,9 @@
     }
   </style>
 </head>
-
 <body>
-  <h1>Saraswati Puja – Contribution</h1>
-  <p class="sub">
-    Tick <span class="check">✅</span> when paid/received.
-    Status is saved on this device (browser local storage).
-    <br/>
-    <span style="color:#666">Tip: When you update the list or default paid status in code, just change the DATA_VERSION (v1 → v2).</span>
-  </p>
+  <h1>Saraswati Puja – Contribution </h1>
+  <p class="sub">Tick <span class="check">✅</span> when paid/received. Status is saved on this device (browser local storage).</p>
 
   <div class="cards">
     <div class="card">
@@ -143,48 +136,45 @@
   </table>
 
 <script>
-  // =========================
-  // 1) Put your list here
-  // =========================
-  const DEFAULT_ROWS = [
-    { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true },
-    { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false },
-    { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100,  paid: false },
-    { sno: 4,  name: "GOLU BHAIYA", amount: 5100,  paid: false },
-    { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000,  paid: false },
-    { sno: 6,  name: "(VIKASH + SUNNY) BHAIYA", amount: 5000,  paid: false },
-    { sno: 7,  name: "(ANNU + MANNU + PITTU) BHAIYA", amount: 5000, paid: false },
-    { sno: 8,  name: "SANJEEV SIR", amount: 5000,  paid: false },
-    { sno: 9,  name: "BAGISH BHAIYA", amount: 5000,  paid: false },
-    { sno: 10, name: "JHUNKI", amount: 5000,  paid: false },
-    { sno: 11, name: "VIJAY YADAV JII", amount: 5000, paid: false },
-    { sno: 12, name: "DEEPU BHAIYA", amount: 2000, paid: false },
+  // ====== 1) Put your list here ======
+  // amount is number; paid true/false
+const DEFAULT_ROWS = [
+  { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true },
+  { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false },
+  { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100,  paid: false },
+  { sno: 4,  name: "GOLU BHAIYA", amount: 5100,  paid: false },
+  { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000,  paid: false },
+  { sno: 6,  name: "(VIKASH + SUNNY) BHAIYA", amount: 5000,  paid: false },
+  { sno: 7,  name: "(ANNU + MANNU + PITTU) BHAIYA", amount: 5000, paid: false },
+  { sno: 8,  name: "SANJEEV SIR", amount: 5000,  paid: false },
+  { sno: 9,  name: "BAGISH BHAIYA", amount: 5000,  paid: false },
+  { sno: 10, name: "JHUNKI", amount: 5000,  paid: false },
+  { sno: 11, name: "VIJAY YADAV JII", amount: 5000, paid: false },
+  { sno: 12, name: "DEEPU BHAIYA", amount: 2000, paid: false },
 
-    { sno: 13, name: "DEEPAK BHAIYA", amount: 2100, paid: false },
-    { sno: 14, name: "VIKASH BHAIYA", amount: 2100, paid: false },
-    { sno: 15, name: "CHHOTU BHAIYA", amount: 2000, paid: false },
-    { sno: 16, name: "RAJNISH BHAIYA", amount: 2000, paid: false },
-    { sno: 17, name: "RUPESH BHAIYA", amount: 2000, paid: false },
-    { sno: 18, name: "RAUSHAN BHAI", amount: 2100, paid: true },
-    { sno: 19, name: "DEEPAK BHAI", amount: 2000, paid: true },
+  { sno: 13, name: "DEEPAK BHAIYA", amount: 2100, paid: false },
+  { sno: 14, name: "VIKASH BHAIYA", amount: 2100, paid: false },
+  { sno: 15, name: "CHHOTU BHAIYA", amount: 2000, paid: false },
+  { sno: 16, name: "RAJNISH BHAIYA", amount: 2000, paid: false },
+  { sno: 17, name: "RUPESH BHAIYA", amount: 2000, paid: false },
+  { sno: 18, name: "RAUSHAN BHAI", amount: 2100, paid: true },
+  { sno: 19, name: "DEEPAK BHAI", amount: 2000, paid: true },
 
-    { sno: 20, name: "MITESH BHAIYA", amount: 1000, paid: false },
-    { sno: 21, name: "MUTO BHAI", amount: 2000, paid: true },
+  { sno: 20, name: "MITESH BHAIYA", amount: 1000, paid: false },
+  { sno: 21, name: "MUTO BHAI", amount: 2000, paid: true },
 
-    { sno: 22, name: "ANSHU BHAI", amount: 2000, paid: false },
-    { sno: 23, name: "ANKUR (CHHOTU) BHAI", amount: 2000, paid: false },
-    { sno: 24, name: "VIBHASH BHAI", amount: 2000, paid: false },
+  { sno: 22, name: "ANSHU BHAI", amount: 2000, paid: false },
+  { sno: 23, name: "ANKUR (CHHOTU) BHAI", amount: 2000, paid: false },
+  { sno: 24, name: "VIBHASH BHAI", amount: 2000, paid: false },
 
-    { sno: 25, name: "CHANDAN BHAIYA", amount: 1000, paid: false },
-    { sno: 26, name: "YOGESH (BITTU)", amount: 1000, paid: false },
-  ];
+  { sno: 25, name: "CHANDAN BHAIYA", amount: 1000, paid: false },
+  { sno: 26, name: "YOGESH (BITTU)", amount: 1000, paid: false },
+];
 
-  // =========================
-  // 2) Versioned Local Storage
-  // Change v1 -> v2 whenever you update DEFAULT_ROWS
-  // =========================
-  const DATA_VERSION = "v1";
-  const KEY = `saraswati_puja_paid_${DATA_VERSION}`;
+
+
+  // ====== 2) Storage key (do not change unless needed) ======
+  const KEY = "saraswati_puja_paid_v1";
 
   // INR formatter
   const INR = new Intl.NumberFormat("en-IN", {
@@ -200,7 +190,6 @@
     try {
       const paidMap = JSON.parse(raw); // { "1": true, "2": false ... }
       const rows = structuredClone(DEFAULT_ROWS);
-
       for (const r of rows){
         if (paidMap[String(r.sno)] != null) r.paid = !!paidMap[String(r.sno)];
       }
@@ -317,4 +306,3 @@
 </script>
 </body>
 </html>
-```
