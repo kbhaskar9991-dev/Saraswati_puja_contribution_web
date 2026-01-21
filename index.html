@@ -87,7 +87,7 @@
 </head>
 <body>
   <h1>Saraswati Puja – Contribution </h1>
-  <p class="sub">Tick <span class="check">✅</span> when paid/received. Status is saved on this device (browser local storage).</p>
+  <p class="sub">Tick <span class="check"></span> Not intergrated with database so all data's are either hardcoded or from your local storage..</p>
 
   <div class="cards">
     <div class="card">
@@ -137,71 +137,85 @@
 
 <script>
   // ====== 1) Put your list here ======
-  // amount is number; paid true/false
-const DEFAULT_ROWS = [
-  { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true },
-  { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false },
-  { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100,  paid: false },
-  { sno: 4,  name: "GOLU BHAIYA", amount: 5100,  paid: false },
-  { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000,  paid: false },
-  { sno: 6,  name: "(VIKASH + SUNNY) BHAIYA", amount: 5000,  paid: false },
-  { sno: 7,  name: "(ANNU + MANNU + PITTU) BHAIYA", amount: 5000, paid: false },
-  { sno: 8,  name: "SANJEEV SIR", amount: 5000,  paid: false },
-  { sno: 9,  name: "BAGISH BHAIYA", amount: 5000,  paid: false },
-  { sno: 10, name: "JHUNKI", amount: 5000,  paid: false },
-  { sno: 11, name: "VIJAY YADAV JII", amount: 5000, paid: false },
-  { sno: 12, name: "DEEPU BHAIYA", amount: 2000, paid: false },
+  const DEFAULT_ROWS = [
+    { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true,  isHardcodedPaid: true },
+    { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false, isHardcodedPaid: false },
+    { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100,  paid: false, isHardcodedPaid: false },
+    { sno: 4,  name: "GOLU BHAIYA", amount: 5100,  paid: false, isHardcodedPaid: false },
+    { sno: 5,  name: "MUNMUN BHAIYA", amount: 5000,  paid: false, isHardcodedPaid: false },
+    { sno: 6,  name: "(VIKASH + SUNNY) BHAIYA", amount: 5000,  paid: false, isHardcodedPaid: false },
+    { sno: 7,  name: "(ANNU + MANNU + PITTU) BHAIYA", amount: 5000, paid: false, isHardcodedPaid: false },
+    { sno: 8,  name: "SANJEEV SIR", amount: 5000,  paid: false, isHardcodedPaid: false },
+    { sno: 9,  name: "BAGISH BHAIYA", amount: 5000,  paid: false, isHardcodedPaid: false },
+    { sno: 10, name: "JHUNKI", amount: 5000,  paid: false, isHardcodedPaid: false },
+    { sno: 11, name: "VIJAY YADAV JII", amount: 5000, paid: false, isHardcodedPaid: false },
+    { sno: 12, name: "DEEPU BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
 
-  { sno: 13, name: "DEEPAK BHAIYA", amount: 2100, paid: false },
-  { sno: 14, name: "VIKASH BHAIYA", amount: 2100, paid: false },
-  { sno: 15, name: "CHHOTU BHAIYA", amount: 2000, paid: false },
-  { sno: 16, name: "RAJNISH BHAIYA", amount: 2000, paid: false },
-  { sno: 17, name: "RUPESH BHAIYA", amount: 2000, paid: false },
-  { sno: 18, name: "RAUSHAN BHAI", amount: 2100, paid: true },
-  { sno: 19, name: "DEEPAK BHAI", amount: 2000, paid: true },
+    { sno: 13, name: "DEEPAK BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
+    { sno: 14, name: "VIKASH BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
+    { sno: 15, name: "CHHOTU BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 16, name: "RAJNISH BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 17, name: "RUPESH BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 18, name: "RAUSHAN BHAI", amount: 2100, paid: true,  isHardcodedPaid: true },
+    { sno: 19, name: "DEEPAK BHAI", amount: 2000, paid: true,  isHardcodedPaid: true },
 
-  { sno: 20, name: "MITESH BHAIYA", amount: 1000, paid: false },
-  { sno: 21, name: "MUTO BHAI", amount: 2000, paid: true },
+    { sno: 20, name: "MITESH BHAIYA", amount: 1000, paid: false, isHardcodedPaid: false },
+    { sno: 21, name: "MUTO BHAI", amount: 2000, paid: true,  isHardcodedPaid: true },
 
-  { sno: 22, name: "ANSHU BHAI", amount: 2000, paid: false },
-  { sno: 23, name: "ANKUR (CHHOTU) BHAI", amount: 2000, paid: false },
-  { sno: 24, name: "VIBHASH BHAI", amount: 2000, paid: false },
+    { sno: 22, name: "ANSHU BHAI", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 23, name: "ANKUR (CHHOTU) BHAI", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 24, name: "VIBHASH BHAI", amount: 2000, paid: false, isHardcodedPaid: false },
 
-  { sno: 25, name: "CHANDAN BHAIYA", amount: 1000, paid: false },
-  { sno: 26, name: "YOGESH (BITTU)", amount: 1000, paid: false },
-];
+    { sno: 25, name: "CHANDAN BHAIYA", amount: 1000, paid: false, isHardcodedPaid: false },
+    { sno: 26, name: "YOGESH (BITTU)", amount: 1000, paid: false, isHardcodedPaid: false },
+  ];
 
+  // ====== 2) Versioned Local Storage (IMPORTANT) ======
+  // Change v1 -> v2 whenever you update DEFAULT_ROWS defaults.
+  const DATA_VERSION = "v1";
+  const KEY = `saraswati_puja_paid_${DATA_VERSION}`;
 
-
-  // ====== 2) Storage key (do not change unless needed) ======
-  const KEY = "saraswati_puja_paid_v1";
-
-  // INR formatter
   const INR = new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0
   });
 
+  // Hardcoded paid rows always win, local storage cannot override them
+  function enforceHardcodedPaid(rows) {
+    for (const r of rows) {
+      if (r.isHardcodedPaid) r.paid = true;
+    }
+    return rows;
+  }
+
   function loadRows(){
     const raw = localStorage.getItem(KEY);
-    if (!raw) return structuredClone(DEFAULT_ROWS);
+    const rows = structuredClone(DEFAULT_ROWS);
 
-    try {
-      const paidMap = JSON.parse(raw); // { "1": true, "2": false ... }
-      const rows = structuredClone(DEFAULT_ROWS);
-      for (const r of rows){
-        if (paidMap[String(r.sno)] != null) r.paid = !!paidMap[String(r.sno)];
+    if (raw) {
+      try {
+        const paidMap = JSON.parse(raw); // { "1": true, "2": false ... }
+        for (const r of rows){
+          // only apply stored value if NOT hardcoded-paid
+          if (!r.isHardcodedPaid && paidMap[String(r.sno)] != null) {
+            r.paid = !!paidMap[String(r.sno)];
+          }
+        }
+      } catch {
+        // ignore parse error; fallback to defaults
       }
-      return rows;
-    } catch {
-      return structuredClone(DEFAULT_ROWS);
     }
+
+    return enforceHardcodedPaid(rows);
   }
 
   function savePaid(rows){
+    // Store only for non-hardcoded rows (optional but clean)
     const paidMap = {};
-    for (const r of rows) paidMap[String(r.sno)] = !!r.paid;
+    for (const r of rows){
+      if (!r.isHardcodedPaid) paidMap[String(r.sno)] = !!r.paid;
+    }
     localStorage.setItem(KEY, JSON.stringify(paidMap));
   }
 
@@ -242,7 +256,7 @@ const DEFAULT_ROWS = [
         <td class="devotee">${escapeHtml(r.name)}</td>
         <td class="amount">${INR.format(Number(r.amount)||0)}</td>
         <td class="paid">
-          <input type="checkbox" data-sno="${r.sno}" ${r.paid ? "checked" : ""} />
+          <input type="checkbox" data-sno="${r.sno}" ${r.paid ? "checked" : ""} ${r.isHardcodedPaid ? "disabled" : ""} />
         </td>
       `;
       tbody.appendChild(tr);
@@ -260,7 +274,7 @@ const DEFAULT_ROWS = [
       .replaceAll("'","&#039;");
   }
 
-  // Toggle single checkbox
+  // Toggle single checkbox (ignore hardcoded)
   document.addEventListener("change", (e) => {
     const el = e.target;
     if (!(el instanceof HTMLInputElement)) return;
@@ -271,6 +285,14 @@ const DEFAULT_ROWS = [
     const row = rows.find(r => r.sno === sno);
     if (!row) return;
 
+    if (row.isHardcodedPaid) {
+      // keep it checked always
+      row.paid = true;
+      savePaid(rows);
+      render();
+      return;
+    }
+
     row.paid = el.checked;
     savePaid(rows);
     render();
@@ -280,7 +302,10 @@ const DEFAULT_ROWS = [
   document.getElementById("markPaid").addEventListener("click", () => {
     const rows = loadRows();
     const ids = new Set(getFiltered(rows).map(r => r.sno));
-    for (const r of rows) if (ids.has(r.sno)) r.paid = true;
+    for (const r of rows){
+      if (ids.has(r.sno)) r.paid = true;
+    }
+    enforceHardcodedPaid(rows);
     savePaid(rows);
     render();
   });
@@ -288,12 +313,17 @@ const DEFAULT_ROWS = [
   document.getElementById("markUnpaid").addEventListener("click", () => {
     const rows = loadRows();
     const ids = new Set(getFiltered(rows).map(r => r.sno));
-    for (const r of rows) if (ids.has(r.sno)) r.paid = false;
+    for (const r of rows){
+      // do NOT mark hardcoded ones as unpaid
+      if (ids.has(r.sno) && !r.isHardcodedPaid) r.paid = false;
+    }
+    enforceHardcodedPaid(rows);
     savePaid(rows);
     render();
   });
 
   document.getElementById("reset").addEventListener("click", () => {
+    // remove saved non-hardcoded statuses; hardcoded paid stays true from defaults
     localStorage.removeItem(KEY);
     render();
   });
@@ -301,8 +331,8 @@ const DEFAULT_ROWS = [
   document.getElementById("q").addEventListener("input", render);
   document.getElementById("filter").addEventListener("change", render);
 
-  // Initial render
   render();
 </script>
+
 </body>
 </html>
