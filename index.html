@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Saraswati Puja – Financial Transparency</title>
+  <title>Saraswati Puja – Contribution & Expenditure</title>
 
   <style>
     :root{
@@ -21,10 +21,34 @@
     }
     h1{ margin:0 0 6px; font-size: 36px; font-weight: 800; }
     .sub{ margin:0 0 18px; color:var(--muted); font-size: 14px; line-height: 1.5; }
+    .sub .check{ font-size: 16px; margin: 0 4px; }
 
+    /* QR section */
+    .qrSection{
+      border:1px solid var(--bd);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background:#fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+      margin: 12px 0 18px;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 16px;
+      align-items: center;
+    }
+    .qrTitle{ font-size: 16px; font-weight: 800; margin: 0 0 6px; }
+    .qrText{ margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .qrImgWrap{ text-align: center; }
+    .qrImg{
+      width: 200px; max-width: 100%; height: auto;
+      border: 1px solid var(--bd); border-radius: 10px; background: #fff;
+    }
+    .qrNote{ margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+    /* Summary cards */
     .cards{
       display:grid;
-      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      grid-template-columns: repeat(6, minmax(160px, 1fr));
       gap:16px;
       margin: 14px 0 14px;
     }
@@ -37,42 +61,30 @@
     }
     .card .label{ color:var(--muted); font-size: 13px; }
     .card .value{ font-size: 22px; font-weight: 800; margin-top: 4px; }
-    .tag{
-      display:inline-block;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      border:1px solid var(--bd);
-      color:#222;
-      background:#fafafa;
-      margin-left: 6px;
-      vertical-align: middle;
-    }
-    .tag.ok{ border-color: rgba(10,122,47,.25); background: rgba(10,122,47,.08); color: var(--ok); }
-    .tag.warn{ border-color: rgba(138,75,0,.25); background: rgba(138,75,0,.08); color: var(--warn); }
 
-    .section{
-      margin-top: 18px;
-      border:1px solid var(--bd);
-      border-radius: 12px;
-      padding: 14px 16px;
+    /* Controls */
+    .controls{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      margin: 10px 0 14px;
+    }
+    input[type="search"], select, button{
+      padding: 10px 12px;
+      border:1px solid #bdbdbd;
+      border-radius: 3px;
+      font-size: 14px;
       background:#fff;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
     }
-    .section h2{
-      margin: 0 0 10px;
-      font-size: 18px;
-      font-weight: 800;
-    }
+    button{ cursor:pointer; }
+    button:active{ transform: translateY(1px); }
+    .btnRow{ display:flex; gap: 10px; align-items:center; flex-wrap:wrap; }
 
-    table{
-      width:100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
+    /* Tables */
+    table{ width:100%; border-collapse: collapse; margin-top: 10px; }
     thead th{
-      text-align:left;
-      font-weight: 700;
+      text-align:left; font-weight: 700;
       border-bottom: 1px solid var(--bd);
       padding: 12px 10px;
       background:#fff;
@@ -86,28 +98,43 @@
       font-size: 14px;
     }
     .amount, th.amount{ text-align:right; white-space:nowrap; font-weight: 700; }
-    .sno{ width: 60px; color: var(--muted); }
-    .item{ font-weight: 700; }
+    .paid, th.paid{ text-align:center; width: 90px; }
+    .sno{ width: 60px; }
+    .devotee{ font-weight: 600; letter-spacing: .2px; }
+
+    /* Sections */
+    .section{
+      margin-top: 18px;
+      border:1px solid var(--bd);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background:#fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+    }
+    .section h2{ margin:0 0 10px; font-size: 18px; font-weight: 800; }
+
     details{ margin-top: 6px; }
-    details summary{ cursor: pointer; color: #111; font-weight: 600; }
+    details summary{ cursor:pointer; font-weight:600; }
     .muted{ color: var(--muted); font-size: 13px; }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap: wrap;
-      align-items:center;
-      margin-top: 8px;
-    }
-    a.button{
+    .tag{
       display:inline-block;
-      padding: 10px 12px;
-      border:1px solid #bdbdbd;
-      border-radius: 6px;
-      text-decoration:none;
-      color:#111;
-      background:#fff;
-      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      border:1px solid var(--bd);
+      color:#222;
+      background:#fafafa;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tag.ok{ border-color: rgba(10,122,47,.25); background: rgba(10,122,47,.08); color: var(--ok); }
+
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    a.button{
+      display:inline-block; padding: 10px 12px;
+      border:1px solid #bdbdbd; border-radius: 6px;
+      text-decoration:none; color:#111; background:#fff; font-size: 14px;
     }
     a.button:hover{ background:#f7f7f7; }
 
@@ -117,16 +144,13 @@
       border-radius: 12px;
       overflow:hidden;
     }
-    iframe{
-      width: 100%;
-      height: 720px;
-      border:0;
-      background:#fff;
-    }
+    iframe{ width:100%; height: 720px; border:0; background:#fff; }
 
     @media (max-width: 980px){
       .cards{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
       h1{ font-size: 28px; }
+      .qrSection{ grid-template-columns: 1fr; }
+      .qrImg{ width: 220px; }
       iframe{ height: 560px; }
     }
   </style>
@@ -134,58 +158,117 @@
 
 <body>
   <h1>Saraswati Puja Samiti – Chitragupta Nagar</h1>
+
   <p class="sub">
-    Financial Transparency (Collection & Expenditure). Puja is completed, so this page is for final summary + bills/receipts.
+    Grey tick mark (disabled): <span class="check">✅</span>
+    It indicates the payment is confirmed and locked by admin (updated in source).
+    Other checkmarks are saved on your device (browser local storage).
   </p>
 
-  <div class="cards">
-    <div class="card">
-      <div class="label">Total Collected</div>
-      <div class="value" id="totalReceived">–</div>
+  <!-- PhonePe QR -->
+  <div class="qrSection">
+    <div>
+      <p class="qrTitle">Want to contribute for Saraswati Puja? 🙏</p>
+      <p class="qrText">
+        Please scan the PhonePe QR code and pay your contribution.
+        After payment, we will update your status in the list.
+      </p>
     </div>
-    <div class="card">
-      <div class="label">Total Spent</div>
-      <div class="value" id="totalSpent">–</div>
-    </div>
-    <div class="card">
-      <div class="label">Saving / Balance</div>
-      <div class="value" id="balance">–</div>
-    </div>
-    <div class="card">
-      <div class="label">Bills / Receipts</div>
-      <div class="value" id="billsCount">–</div>
+    <div class="qrImgWrap">
+      <!-- Put phonepe_qr.jpg in same folder as index.html -->
+      <img class="qrImg" src="phonepe_qr.jpg" alt="PhonePe QR code for Saraswati Puja contribution" />
+      <div class="qrNote">Scan using PhonePe / UPI app</div>
     </div>
   </div>
 
+  <!-- Summary Cards -->
+  <div class="cards">
+    <div class="card">
+      <div class="label">Total Contributors</div>
+      <div class="value" id="totalContrib">–</div>
+    </div>
+    <div class="card">
+      <div class="label">Total Collected</div>
+      <div class="value" id="totalAmt">–</div>
+    </div>
+    <div class="card">
+      <div class="label">Paid Amount</div>
+      <div class="value" id="paidAmt">–</div>
+    </div>
+    <div class="card">
+      <div class="label">Unpaid Amount</div>
+      <div class="value" id="unpaidAmt">–</div>
+    </div>
+    <div class="card">
+      <div class="label">Total Spent</div>
+      <div class="value" id="spentAmt">–</div>
+    </div>
+    <div class="card">
+      <div class="label">Balance (Remaining)</div>
+      <div class="value" id="balanceAmt">–</div>
+    </div>
+  </div>
+
+  <!-- Contributor Controls (same behavior as before) -->
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search name…" />
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="paid">Paid</option>
+      <option value="unpaid">Unpaid</option>
+    </select>
+
+    <div class="btnRow">
+      <button id="markPaid">Mark shown as Paid</button>
+      <button id="markUnpaid">Mark shown as Unpaid</button>
+      <button id="reset">Reset local changes</button>
+    </div>
+  </div>
+
+  <!-- Contributors Table -->
+  <table>
+    <thead>
+      <tr>
+        <th class="sno">S No</th>
+        <th>Devotee</th>
+        <th class="amount">Amount</th>
+        <th class="paid">Paid?</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <!-- NEW: Expenditure Section -->
   <div class="section">
-    <h2>Expenditure Breakdown <span id="matchTag" class="tag">Checking…</span></h2>
+    <h2>Expenditure Breakdown <span class="tag ok">Final Summary</span></h2>
     <div class="muted">
-      Note: Amounts are as per final sheet. If you update any amount, totals will auto-update.
+      Add/update expenditures below in code. Totals update automatically.
     </div>
 
     <table>
       <thead>
         <tr>
           <th class="sno">S No</th>
-          <th>Item</th>
-          <th>Details</th>
+          <th>Expense Item</th>
+          <th>Notes</th>
           <th class="amount">Amount</th>
         </tr>
       </thead>
       <tbody id="expenseBody"></tbody>
       <tfoot>
         <tr>
-          <td colspan="3" style="padding:12px 10px; font-weight:800; border-top:1px solid var(--bd);">TOTAL</td>
+          <td colspan="3" style="padding:12px 10px; font-weight:900; border-top:1px solid var(--bd);">TOTAL</td>
           <td class="amount" id="expenseTotal" style="padding:12px 10px; font-weight:900; border-top:1px solid var(--bd);">–</td>
         </tr>
       </tfoot>
     </table>
   </div>
 
+  <!-- NEW: Bills PDF -->
   <div class="section">
     <h2>Bills / Receipts (PDF)</h2>
     <div class="muted">
-      Put the PDF in the same folder as <b>index.html</b> with the name:
+      Upload your bills PDF in the same folder as <b>index.html</b> with name:
       <b>Financial_Transparency_Saraswati_Puja.pdf</b>
     </div>
 
@@ -195,100 +278,94 @@
     </div>
 
     <div class="pdfWrap">
-      <!-- Opens near bills pages; adjust #page=5 if needed -->
       <iframe
-        src="Financial_Transparency_Saraswati_Puja.pdf#page=5"
+        src="Financial_Transparency_Saraswati_Puja.pdf#page=1"
         title="Saraswati Puja Bills / Receipts"
       ></iframe>
     </div>
   </div>
 
 <script>
-  // ===== Data (final numbers from your sheet) =====
-  // Total Received: ₹75,700
-  // Total Expenses: ₹72,597
-  // Saving: ₹3,103
-  const TOTAL_RECEIVED = 75700;
+  // =========================
+  // 1) CONTRIBUTORS DATA
+  // =========================
+  // isHardcodedPaid: true  => locked paid (always checked + disabled)
+  // isHardcodedPaid: false => editable by checkbox (saved in localStorage per device)
+  const DEFAULT_ROWS = [
+    { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true,  isHardcodedPaid: true },
 
-  // Expenditure items (with simple detail notes)
-  const EXPENSES = [
-    { sno: 1, item: "Pandal", amount: 15100, details: ["Khagaria Tent House"] },
-    { sno: 2, item: "Murti + Accessories", amount: 9000, details: ["Murti + Nath + Tika + Chunri + Flex + Bidai + Bhara"] },
-    { sno: 3, item: "Prasad", amount: 10740, details: ["Mahaveer Bhandar items", "Haluwai charges", "Oil/Fortune adjustments", "Accessories, lunch, sugar"] },
-    { sno: 4, item: "Fruits", amount: 3000, details: ["Grapes, Apple, Orange, Banana, Mishrikand, Gajar"] },
-    { sno: 5, item: "Puja Samagri", amount: 7400, details: ["Puja items + Saree + Pan + Plate + Gamchha"] },
-    { sno: 6, item: "Sound System", amount: 7500, details: ["Sound + Bhara"] },
-    { sno: 7, item: "Decoration", amount: 9175, details: ["Artist decoration", "Balloon decoration", "Flower decoration", "Rangoli"] },
-    { sno: 8, item: "Visarjan", amount: 4405, details: ["Gamchha", "Patakha", "Patakha machine", "Abeer", "Chocolate", "Ribbon"] },
-    { sno: 9, item: "Hawan Samagri", amount: 700, details: ["Hawan items"] },
-    { sno: 10, item: "Gas Cylinder", amount: 1030, details: ["Gas"] },
-    { sno: 11, item: "Bartan + Bhara", amount: 1050, details: ["Tray, Topia, Chulha, Balti, Gamla, Mug etc."] },
-    { sno: 12, item: "Daksina (Pandit Ji)", amount: 751, details: ["Daksina"] },
-    { sno: 13, item: "Miscellaneous", amount: 2746, details: ["Dahi/kchuda paisa", "Diesel", "Packets", "Til tel", "Bijli mistri", "Lunch/kharcha", "Labour cost", "Tape etc."] }
+    // If Mukesh is NOT confirmed paid, set isHardcodedPaid:false
+    { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false, isHardcodedPaid: false },
+
+    { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100, paid: false, isHardcodedPaid: false },
+    { sno: 4,  name: "GOLU BHAIYA", amount: 5100, paid: false, isHardcodedPaid: false },
+    { sno: 5,  name: "VIJAY YADAV JII", amount: 5100, paid: false, isHardcodedPaid: false },
+
+    { sno: 6,  name: "(ANNU + MANNU) BHAIYA", amount: 5000, paid: false, isHardcodedPaid: false },
+    { sno: 7,  name: "(RAJNISH + SUNNY) BHAIYA", amount: 3600, paid: false, isHardcodedPaid: false },
+    { sno: 8,  name: "SANJEEV SIR", amount: 3100, paid: false, isHardcodedPaid: false },
+
+    { sno: 9,  name: "VIKASH BHAIYA (ICICI)", amount: 2500, paid: false, isHardcodedPaid: false },
+    { sno: 10, name: "BAGISH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: false },
+    { sno: 11, name: "RUPESH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: false },
+
+    { sno: 12, name: "DEEPAK BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
+    { sno: 13, name: "CHHOTU BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
+    { sno: 14, name: "RAUSHAN BHAI", amount: 2100, paid: true,  isHardcodedPaid: true },
+
+    { sno: 15, name: "RANBEER BHAIYA", amount: 2000, paid: true,  isHardcodedPaid: true },
+    { sno: 16, name: "DEEPU BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
+    { sno: 17, name: "DEEPAK BHAI", amount: 2000, paid: true,  isHardcodedPaid: true },
+    { sno: 18, name: "ANSHU BHAI (WARD C.)", amount: 2000, paid: false, isHardcodedPaid: false },
+
+    { sno: 19, name: "VIKASH BHAIYA (Marine Eng.)", amount: 1500, paid: true,  isHardcodedPaid: true },
+    { sno: 20, name: "MUTO BHAI", amount: 1500, paid: true,  isHardcodedPaid: true },
+
+    { sno: 21, name: "ANSHU BHAIYA (SUNIL BABU)", amount: 1101, paid: false, isHardcodedPaid: false },
+    { sno: 22, name: "YOGESH (MUKESH BHAIYA)", amount: 1100, paid: false, isHardcodedPaid: false },
+
+    { sno: 23, name: "SUDHIR BABU", amount: 1000, paid: false, isHardcodedPaid: false },
+    { sno: 24, name: "SHILPI BP (VIA MUTO)", amount: 1000, paid: false, isHardcodedPaid: false },
+
+    { sno: 25, name: "CHANDAN BHAIYA", amount: 501, paid: false, isHardcodedPaid: false },
+    { sno: 26, name: "CHHOTU (SUDARSHAN BHAIYA)", amount: 501, paid: false, isHardcodedPaid: false },
+
+    { sno: 27, name: "VIBHASH BHAI", amount: 500, paid: false, isHardcodedPaid: false },
+    { sno: 28, name: "Saved Amount 2024", amount: 3103, paid: false, isHardcodedPaid: false },
   ];
 
-  // Just for display (PDF includes multiple bill pages)
-  const BILL_PAGES_ESTIMATE = 10; // your pdf shows bill images across later pages; adjust if you want
+  // =========================
+  // 2) EXPENDITURE DATA
+  // =========================
+  // Put final expenditures here (edit anytime).
+  const EXPENSES = [
+    { sno: 1, item: "Pandal", amount: 15100, notes: ["Khagaria Tent House"] },
+    { sno: 2, item: "Murti + Accessories", amount: 9000, notes: ["Murti + accessories + bidai etc."] },
+    { sno: 3, item: "Prasad", amount: 10740, notes: ["Bhandar + Haluwai + oil/sugar etc."] },
+    { sno: 4, item: "Fruits", amount: 3000, notes: ["Grapes, Apple, Orange, Banana etc."] },
+    { sno: 5, item: "Puja Samagri", amount: 7400, notes: ["Puja items + saree + pan/plate etc."] },
+    { sno: 6, item: "Sound System", amount: 7500, notes: ["Sound + bhara"] },
+    { sno: 7, item: "Decoration", amount: 9175, notes: ["Artist + balloon + flower + rangoli"] },
+    { sno: 8, item: "Visarjan", amount: 4405, notes: ["Patakha, abeer, ribbon etc."] },
+    { sno: 9, item: "Hawan Samagri", amount: 700, notes: ["Hawan items"] },
+    { sno: 10, item: "Gas Cylinder", amount: 1030, notes: ["Gas"] },
+    { sno: 11, item: "Bartan + Bhara", amount: 1050, notes: ["Utensils + bhara"] },
+    { sno: 12, item: "Daksina (Pandit Ji)", amount: 751, notes: ["Daksina"] },
+    { sno: 13, item: "Miscellaneous", amount: 2746, notes: ["Diesel, packets, labour, tape etc."] },
+  ];
+
+  // =========================
+  // 3) LocalStorage Versioning
+  // =========================
+  // Change v1 -> v2 when you update DEFAULT_ROWS defaults.
+  const DATA_VERSION = "v1";
+  const KEY = `saraswati_puja_paid_${DATA_VERSION}`;
 
   const INR = new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0
   });
-
-  function calcTotalExpenses(){
-    return EXPENSES.reduce((sum, x) => sum + (Number(x.amount) || 0), 0);
-  }
-
-  function renderSummary(){
-    const totalSpent = calcTotalExpenses();
-    const balance = TOTAL_RECEIVED - totalSpent;
-
-    document.getElementById("totalReceived").textContent = INR.format(TOTAL_RECEIVED);
-    document.getElementById("totalSpent").textContent = INR.format(totalSpent);
-    document.getElementById("balance").textContent = INR.format(balance);
-    document.getElementById("billsCount").textContent = String(BILL_PAGES_ESTIMATE);
-
-    // Tag shows if computed matches expected (72,597)
-    const expected = 72597;
-    const tag = document.getElementById("matchTag");
-    if (totalSpent === expected){
-      tag.textContent = "Matched with sheet ✅";
-      tag.classList.add("ok");
-    } else {
-      tag.textContent = `Mismatch (Computed ${INR.format(totalSpent)} vs Sheet ${INR.format(expected)})`;
-      tag.classList.add("warn");
-    }
-
-    document.getElementById("expenseTotal").textContent = INR.format(totalSpent);
-  }
-
-  function renderExpenses(){
-    const tbody = document.getElementById("expenseBody");
-    tbody.innerHTML = "";
-
-    for (const e of EXPENSES){
-      const tr = document.createElement("tr");
-      const detailsHtml = (e.details && e.details.length)
-        ? `
-          <details>
-            <summary>View details</summary>
-            <ul class="muted" style="margin:8px 0 0 18px;">
-              ${e.details.map(d => `<li>${escapeHtml(d)}</li>`).join("")}
-            </ul>
-          </details>
-        `
-        : `<span class="muted">–</span>`;
-
-      tr.innerHTML = `
-        <td class="sno">${e.sno}</td>
-        <td class="item">${escapeHtml(e.item)}</td>
-        <td>${detailsHtml}</td>
-        <td class="amount">${INR.format(Number(e.amount)||0)}</td>
-      `;
-      tbody.appendChild(tr);
-    }
-  }
 
   function escapeHtml(str){
     return String(str)
@@ -299,9 +376,182 @@
       .replaceAll("'","&#039;");
   }
 
+  // Hardcoded paid rows always win, local storage cannot override them.
+  function enforceHardcodedPaid(rows) {
+    for (const r of rows) {
+      if (r.isHardcodedPaid) r.paid = true;
+    }
+    return rows;
+  }
+
+  function loadRows(){
+    const rows = structuredClone(DEFAULT_ROWS);
+    const raw = localStorage.getItem(KEY);
+
+    if (raw) {
+      try {
+        const paidMap = JSON.parse(raw); // { "1": true, "2": false ... }
+        for (const r of rows){
+          // apply local only for non-hardcoded rows
+          if (!r.isHardcodedPaid && paidMap[String(r.sno)] != null) {
+            r.paid = !!paidMap[String(r.sno)];
+          }
+        }
+      } catch {}
+    }
+    return enforceHardcodedPaid(rows);
+  }
+
+  function savePaid(rows){
+    const paidMap = {};
+    for (const r of rows){
+      if (!r.isHardcodedPaid) paidMap[String(r.sno)] = !!r.paid;
+    }
+    localStorage.setItem(KEY, JSON.stringify(paidMap));
+  }
+
+  function getFiltered(rows){
+    const q = document.getElementById("q").value.trim().toLowerCase();
+    const f = document.getElementById("filter").value;
+
+    return rows.filter(r => {
+      if (f === "paid" && !r.paid) return false;
+      if (f === "unpaid" && r.paid) return false;
+      if (q && !r.name.toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }
+
+  function calcExpenseTotal(){
+    return EXPENSES.reduce((sum, x) => sum + (Number(x.amount) || 0), 0);
+  }
+
+  function updateSummary(rows){
+    const totalCollected = rows.reduce((a,r)=>a+(Number(r.amount)||0),0);
+    const paidCollected  = rows.reduce((a,r)=>a+(r.paid?(Number(r.amount)||0):0),0);
+    const spentTotal = calcExpenseTotal();
+    const balance = totalCollected - spentTotal;
+
+    document.getElementById("totalContrib").textContent = String(rows.length);
+    document.getElementById("totalAmt").textContent = INR.format(totalCollected);
+    document.getElementById("paidAmt").textContent = INR.format(paidCollected);
+    document.getElementById("unpaidAmt").textContent = INR.format(totalCollected - paidCollected);
+    document.getElementById("spentAmt").textContent = INR.format(spentTotal);
+    document.getElementById("balanceAmt").textContent = INR.format(balance);
+  }
+
+  function renderContributors(){
+    const rows = loadRows();
+    const view = getFiltered(rows);
+
+    const tbody = document.getElementById("tbody");
+    tbody.innerHTML = "";
+
+    for (const r of view){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="sno">${r.sno}</td>
+        <td class="devotee">${escapeHtml(r.name)}</td>
+        <td class="amount">${INR.format(Number(r.amount)||0)}</td>
+        <td class="paid">
+          <input type="checkbox"
+                 data-sno="${r.sno}"
+                 ${r.paid ? "checked" : ""}
+                 ${r.isHardcodedPaid ? "disabled" : ""} />
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    updateSummary(rows);
+  }
+
+  function renderExpenses(){
+    const tbody = document.getElementById("expenseBody");
+    tbody.innerHTML = "";
+
+    for (const e of EXPENSES){
+      const notesHtml = (e.notes && e.notes.length)
+        ? `
+          <details>
+            <summary>View notes</summary>
+            <ul class="muted" style="margin:8px 0 0 18px;">
+              ${e.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("")}
+            </ul>
+          </details>
+        `
+        : `<span class="muted">–</span>`;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="sno">${e.sno}</td>
+        <td class="devotee">${escapeHtml(e.item)}</td>
+        <td>${notesHtml}</td>
+        <td class="amount">${INR.format(Number(e.amount)||0)}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    document.getElementById("expenseTotal").textContent = INR.format(calcExpenseTotal());
+  }
+
+  // Checkbox toggle (ignore hardcoded paid)
+  document.addEventListener("change", (e) => {
+    const el = e.target;
+    if (!(el instanceof HTMLInputElement)) return;
+    if (el.type !== "checkbox" || !el.dataset.sno) return;
+
+    const sno = Number(el.dataset.sno);
+    const rows = loadRows();
+    const row = rows.find(r => r.sno === sno);
+    if (!row) return;
+
+    if (row.isHardcodedPaid) {
+      row.paid = true;         // keep locked rows always paid
+      savePaid(rows);
+      renderContributors();
+      return;
+    }
+
+    row.paid = el.checked;
+    savePaid(rows);
+    renderContributors();
+  });
+
+  // Bulk controls
+  document.getElementById("markPaid").addEventListener("click", () => {
+    const rows = loadRows();
+    const ids = new Set(getFiltered(rows).map(r => r.sno));
+    for (const r of rows){
+      if (ids.has(r.sno) && !r.isHardcodedPaid) r.paid = true;
+    }
+    enforceHardcodedPaid(rows);
+    savePaid(rows);
+    renderContributors();
+  });
+
+  document.getElementById("markUnpaid").addEventListener("click", () => {
+    const rows = loadRows();
+    const ids = new Set(getFiltered(rows).map(r => r.sno));
+    for (const r of rows){
+      if (ids.has(r.sno) && !r.isHardcodedPaid) r.paid = false;
+    }
+    enforceHardcodedPaid(rows);
+    savePaid(rows);
+    renderContributors();
+  });
+
+  document.getElementById("reset").addEventListener("click", () => {
+    localStorage.removeItem(KEY); // reset local edits only
+    renderContributors();
+  });
+
+  document.getElementById("q").addEventListener("input", renderContributors);
+  document.getElementById("filter").addEventListener("change", renderContributors);
+
   // Init
   renderExpenses();
-  renderSummary();
+  renderContributors();
 </script>
 </body>
 </html>
