@@ -165,22 +165,6 @@
     Other checkmarks are saved on your device (browser local storage).
   </p>
 
-  <!-- PhonePe QR -->
-  <div class="qrSection">
-    <div>
-      <p class="qrTitle">Want to contribute for Saraswati Puja? 🙏</p>
-      <p class="qrText">
-        Please scan the PhonePe QR code and pay your contribution.
-        After payment, we will update your status in the list.
-      </p>
-    </div>
-    <div class="qrImgWrap">
-      <!-- Put phonepe_qr.jpg in same folder as index.html -->
-      <img class="qrImg" src="phonepe_qr.jpg" alt="PhonePe QR code for Saraswati Puja contribution" />
-      <div class="qrNote">Scan using PhonePe / UPI app</div>
-    </div>
-  </div>
-
   <!-- Summary Cards -->
   <div class="cards">
     <div class="card">
@@ -291,48 +275,49 @@
   // =========================
   // isHardcodedPaid: true  => locked paid (always checked + disabled)
   // isHardcodedPaid: false => editable by checkbox (saved in localStorage per device)
-  const DEFAULT_ROWS = [
-    { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true,  isHardcodedPaid: true },
+ const DEFAULT_ROWS = [
+  { sno: 1,  name: "SHAMBHU BHAIYA + CHHOTU", amount: 12000, paid: true,  isHardcodedPaid: true },
 
-    // If Mukesh is NOT confirmed paid, set isHardcodedPaid:false
-    { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false, isHardcodedPaid: false },
+  // If Mukesh is NOT confirmed paid, set isHardcodedPaid:false
+  { sno: 2,  name: "MUKESH BHAIYA", amount: 10000, paid: false, isHardcodedPaid: true },
 
-    { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100, paid: false, isHardcodedPaid: false },
-    { sno: 4,  name: "GOLU BHAIYA", amount: 5100, paid: false, isHardcodedPaid: false },
-    { sno: 5,  name: "VIJAY YADAV JII", amount: 5100, paid: false, isHardcodedPaid: false },
+  { sno: 3,  name: "NANDAN SIR (MANAS INTERNATIONAL SCHOOL)", amount: 5100, paid: false, isHardcodedPaid: true },
+  { sno: 4,  name: "GOLU BHAIYA", amount: 5100, paid: false, isHardcodedPaid: true },
+  { sno: 5,  name: "VIJAY YADAV JII", amount: 5100, paid: false, isHardcodedPaid: true },
 
-    { sno: 6,  name: "(ANNU + MANNU) BHAIYA", amount: 5000, paid: false, isHardcodedPaid: false },
-    { sno: 7,  name: "(RAJNISH + SUNNY) BHAIYA", amount: 3600, paid: false, isHardcodedPaid: false },
-    { sno: 8,  name: "SANJEEV SIR", amount: 3100, paid: false, isHardcodedPaid: false },
+  { sno: 6,  name: "(ANNU + MANNU) BHAIYA", amount: 5000, paid: false, isHardcodedPaid: true },
+  { sno: 7,  name: "(RAJNISH + SUNNY) BHAIYA", amount: 3600, paid: false, isHardcodedPaid: true },
+  { sno: 8,  name: "SANJEEV SIR", amount: 3100, paid: false, isHardcodedPaid: true },
 
-    { sno: 9,  name: "VIKASH BHAIYA (ICICI)", amount: 2500, paid: false, isHardcodedPaid: false },
-    { sno: 10, name: "BAGISH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: false },
-    { sno: 11, name: "RUPESH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: false },
+  { sno: 9,  name: "VIKASH BHAIYA (ICICI)", amount: 2500, paid: false, isHardcodedPaid: true },
+  { sno: 10, name: "BAGISH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: true },
+  { sno: 11, name: "RUPESH BHAIYA", amount: 2500, paid: false, isHardcodedPaid: true },
 
-    { sno: 12, name: "DEEPAK BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
-    { sno: 13, name: "CHHOTU BHAIYA", amount: 2100, paid: false, isHardcodedPaid: false },
-    { sno: 14, name: "RAUSHAN BHAI", amount: 2100, paid: true,  isHardcodedPaid: true },
+  { sno: 12, name: "DEEPAK BHAIYA", amount: 2100, paid: false, isHardcodedPaid: true },
+  { sno: 13, name: "CHHOTU BHAIYA", amount: 2100, paid: false, isHardcodedPaid: true },
+  { sno: 14, name: "RAUSHAN BHAI", amount: 2100, paid: true,  isHardcodedPaid: true },
 
-    { sno: 15, name: "RANBEER BHAIYA", amount: 2000, paid: true,  isHardcodedPaid: true },
-    { sno: 16, name: "DEEPU BHAIYA", amount: 2000, paid: false, isHardcodedPaid: false },
-    { sno: 17, name: "DEEPAK BHAI", amount: 2000, paid: true,  isHardcodedPaid: true },
-    { sno: 18, name: "ANSHU BHAI (WARD C.)", amount: 2000, paid: false, isHardcodedPaid: false },
+  { sno: 15, name: "RANBEER BHAIYA", amount: 2000, paid: true,  isHardcodedPaid: true },
+  { sno: 16, name: "DEEPU BHAIYA", amount: 2000, paid: false, isHardcodedPaid: true },
+  { sno: 17, name: "DEEPAK BHAI", amount: 2000, paid: true,  isHardcodedPaid: true },
+  { sno: 18, name: "ANSHU BHAI (WARD C.)", amount: 2000, paid: false, isHardcodedPaid: true },
 
-    { sno: 19, name: "VIKASH BHAIYA (Marine Eng.)", amount: 1500, paid: true,  isHardcodedPaid: true },
-    { sno: 20, name: "MUTO BHAI", amount: 1500, paid: true,  isHardcodedPaid: true },
+  { sno: 19, name: "VIKASH BHAIYA (Marine Eng.)", amount: 1500, paid: true,  isHardcodedPaid: true },
+  { sno: 20, name: "MUTO BHAI", amount: 1500, paid: true,  isHardcodedPaid: true },
 
-    { sno: 21, name: "ANSHU BHAIYA (SUNIL BABU)", amount: 1101, paid: false, isHardcodedPaid: false },
-    { sno: 22, name: "YOGESH (MUKESH BHAIYA)", amount: 1100, paid: false, isHardcodedPaid: false },
+  { sno: 21, name: "ANSHU BHAIYA (SUNIL BABU)", amount: 1101, paid: false, isHardcodedPaid: true },
+  { sno: 22, name: "YOGESH (MUKESH BHAIYA)", amount: 1100, paid: false, isHardcodedPaid: true },
 
-    { sno: 23, name: "SUDHIR BABU", amount: 1000, paid: false, isHardcodedPaid: false },
-    { sno: 24, name: "SHILPI BP (VIA MUTO)", amount: 1000, paid: false, isHardcodedPaid: false },
+  { sno: 23, name: "SUDHIR BABU", amount: 1000, paid: false, isHardcodedPaid: true },
+  { sno: 24, name: "SHILPI BP (VIA MUTO)", amount: 1000, paid: false, isHardcodedPaid: true },
 
-    { sno: 25, name: "CHANDAN BHAIYA", amount: 501, paid: false, isHardcodedPaid: false },
-    { sno: 26, name: "CHHOTU (SUDARSHAN BHAIYA)", amount: 501, paid: false, isHardcodedPaid: false },
+  { sno: 25, name: "CHANDAN BHAIYA", amount: 501, paid: false, isHardcodedPaid: true },
+  { sno: 26, name: "CHHOTU (SUDARSHAN BHAIYA)", amount: 501, paid: false, isHardcodedPaid: true },
 
-    { sno: 27, name: "VIBHASH BHAI", amount: 500, paid: false, isHardcodedPaid: false },
-    { sno: 28, name: "Saved Amount 2024", amount: 3103, paid: false, isHardcodedPaid: false },
-  ];
+  { sno: 27, name: "VIBHASH BHAI", amount: 500, paid: false, isHardcodedPaid: true },
+  { sno: 28, name: "Saved Amount 2024", amount: 3103, paid: false, isHardcodedPaid: true },
+];
+
 
   // =========================
   // 2) EXPENDITURE DATA
